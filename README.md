@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 0.1.0"}
+    {:annacl, "~> 0.2.0"}
   ]
 end
 ```
@@ -70,14 +70,14 @@ defmodule MyApp.Accounts
 end
 
 # superadmin is a special role that bypass all roles and permissions
-{:ok, _superadmin_role} = Annacl.create_role(%{name: "superadmin"})
+{:ok, _superadmin_role} = Annacl.create_role("superadmin")
 
-{:ok, _user_role} = Annacl.create_role(%{name: "user"})
+{:ok, _user_role} = Annacl.create_role("user")
 
-{:ok, posts_list} = Annacl.create_permission(%{name: "posts.list"})
-{:ok, posts_create} = Annacl.create_permission(%{name: "posts.create"})
-{:ok, posts_read} = Annacl.create_permission(%{name: "posts.read"})
-{:ok, posts_update} = Annacl.create_permission(%{name: "post.udpate"})
+{:ok, posts_list} = Annacl.create_permission("posts.list")
+{:ok, posts_create} = Annacl.create_permission("posts.create")
+{:ok, posts_read} = Annacl.create_permission("posts.read")
+{:ok, posts_update} = Annacl.create_permission("post.udpate")
 
 Annacl.grant_permission_to_role(user_role, posts_list)
 Annacl.grant_permission_to_role(user_role, posts_read)
