@@ -1,4 +1,7 @@
 defmodule Annacl.ACL.Performers.PerformerRole do
+  @moduledoc """
+  Ecto Schema that represent an association between a performer and a role.
+  """
   use Annacl.Schema
 
   alias Annacl.ACL.Performers.Performer
@@ -11,6 +14,7 @@ defmodule Annacl.ACL.Performers.PerformerRole do
     timestamps()
   end
 
+  @spec changeset(PerformerRole.t(), map()) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = performer_role, attrs) when is_map(attrs) do
     performer_role
     |> cast(attrs, [:performer_id, :role_id])

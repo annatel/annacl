@@ -1,7 +1,6 @@
 defmodule Annacl.ACL.Performers do
-  @moduledoc """
-  Performers context
-  """
+  @moduledoc false
+
   import Ecto.Query, only: [where: 2, preload: 2]
   alias Ecto.Multi
 
@@ -16,8 +15,8 @@ defmodule Annacl.ACL.Performers do
     |> repo().get!(id)
   end
 
-  @spec assign_role(Performer.t(), Role.t() | list()) ::
-          {:error, Ecto.Changeset.t()} | {:ok, PerformerRole.t() | [PerformerRole.t()]}
+  @spec assign_role(Performer.t(), Role.t() | [Role.t()]) ::
+          {:ok, PerformerRole.t() | [PerformerRole.t()]} | {:error, Ecto.Changeset.t()}
   def assign_role(%Performer{} = performer, %Role{} = role) do
     with {:ok, [performer_role]} <- assign_role(performer, [role]) do
       {:ok, performer_role}
@@ -48,7 +47,7 @@ defmodule Annacl.ACL.Performers do
   end
 
   @spec remove_role(Performer.t(), Role.t()) ::
-          {:error, Ecto.Changeset.t()} | {:ok, PerformerRole.t()}
+          {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}
   def remove_role(%Performer{id: performer_id}, %Role{id: role_id}) do
     PerformerRole
     |> where(performer_id: ^performer_id, role_id: ^role_id)
@@ -57,7 +56,8 @@ defmodule Annacl.ACL.Performers do
   end
 
   @spec grant_permission(Performer.t(), Permission.t() | list) ::
-          {:error, Ecto.Changeset.t()} | {:ok, PerformerPermission.t()}
+          {:ok, PerformerPermission.t() | [PerformerPermission.t()]}
+          | {:error, Ecto.Changeset.t()}
   def grant_permission(%Performer{} = performer, %Permission{} = permission) do
     with {:ok, [performer_permission]} <- grant_permission(performer, [permission]) do
       {:ok, performer_permission}
@@ -91,7 +91,7 @@ defmodule Annacl.ACL.Performers do
   end
 
   @spec revoke_permission(Performer.t(), Permission.t()) ::
-          {:error, Ecto.Changeset.t()} | {:ok, PerformerPermission.t()}
+          {:ok, PerformerPermission.t()} | {:error, Ecto.Changeset.t()}
   def revoke_permission(%Performer{id: performer_id}, %Permission{id: permission_id}) do
     PerformerPermission
     |> where(performer_id: ^performer_id, permission_id: ^permission_id)
@@ -99,7 +99,7 @@ defmodule Annacl.ACL.Performers do
     |> repo().delete()
   end
 
-  @spec has_role?(Performer.t(), Role.t() | list()) :: boolean
+  @spec has_role?(Performer.t(), Role.t() | [Role.t()]) :: boolean
   def has_role?(%Performer{} = performer, %Role{} = role) do
     has_role?(performer, [role])
   end
@@ -113,7 +113,7 @@ defmodule Annacl.ACL.Performers do
     end)
   end
 
-  @spec can?(Performer.t(), Permission.t() | list()) :: boolean
+  @spec can?(Performer.t(), Permission.t() | [Permission.t()]) :: boolean
   def can?(%Performer{} = performer, %Permission{} = permission) do
     can?(performer, [permission])
   end

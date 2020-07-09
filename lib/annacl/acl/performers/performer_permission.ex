@@ -1,4 +1,7 @@
 defmodule Annacl.ACL.Performers.PerformerPermission do
+  @moduledoc """
+  Ecto Schema that represent an association between a performer and a permission.
+  """
   use Annacl.Schema
 
   alias Annacl.ACL.Performers.Performer
@@ -11,6 +14,7 @@ defmodule Annacl.ACL.Performers.PerformerPermission do
     timestamps()
   end
 
+  @spec changeset(PerformerPermission.t(), map()) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = performer_permission, attrs) when is_map(attrs) do
     performer_permission
     |> cast(attrs, [:performer_id, :permission_id])

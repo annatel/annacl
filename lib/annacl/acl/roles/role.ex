@@ -1,4 +1,7 @@
 defmodule Annacl.ACL.Roles.Role do
+  @moduledoc """
+  Ecto Schema that represent a role.
+  """
   use Annacl.Schema
 
   alias Annacl.ACL.Permissions.Permission
@@ -12,6 +15,7 @@ defmodule Annacl.ACL.Roles.Role do
     timestamps()
   end
 
+  @spec changeset(Role.t(), map()) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = role, attrs) when is_map(attrs) do
     role
     |> cast(attrs, [:name])

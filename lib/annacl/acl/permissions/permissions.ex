@@ -1,14 +1,14 @@
 defmodule Annacl.ACL.Permissions do
-  @moduledoc """
-  Permissions context
-  """
+  @moduledoc false
+
   import Ecto.Query, only: [where: 2]
 
   alias Annacl.ACL.Permissions.Permission
   alias Annacl.ACL.Roles.Role
   alias Annacl.ACL.PermissionsRoles
 
-  @spec create_permission(map) :: {:ok, Permission.t()} | {:error, Ecto.Changeset.t()}
+  @spec create_permission(map) ::
+          {:ok, Annacl.ACL.Permissions.Permission.t()} | {:error, Ecto.Changeset.t()}
   def create_permission(attrs) when is_map(attrs) do
     %Permission{}
     |> Permission.changeset(attrs)

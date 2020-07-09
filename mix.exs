@@ -4,7 +4,7 @@ defmodule Annacl.MixProject do
   def project do
     [
       app: :annacl,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -25,6 +25,7 @@ defmodule Annacl.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:ex_machina, "~> 2.3", only: :test},
       {:myxql, "~> 0.4.0", only: :test},
       {:ecto_sql, "~> 3.0"}

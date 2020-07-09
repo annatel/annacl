@@ -1,4 +1,6 @@
 defmodule Annacl.Migrations.V1 do
+  @moduledoc false
+
   use Ecto.Migration
 
   def up do

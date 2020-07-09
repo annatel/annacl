@@ -1,7 +1,5 @@
 defmodule Annacl.ACL.PermissionsRoles do
-  @moduledoc """
-  Permissions context
-  """
+  @moduledoc false
   import Ecto.Query, only: [where: 2]
 
   alias Annacl.ACL.Permissions.Permission

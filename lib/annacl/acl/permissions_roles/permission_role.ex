@@ -1,4 +1,7 @@
 defmodule Annacl.ACL.PermissionsRoles.PermissionRole do
+  @moduledoc """
+  Ecto Schema that represent the association between a permission and a role.
+  """
   use Annacl.Schema
 
   alias Annacl.ACL.Permissions.Permission
@@ -11,6 +14,7 @@ defmodule Annacl.ACL.PermissionsRoles.PermissionRole do
     timestamps()
   end
 
+  @spec changeset(PermissionRole.t(), map()) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = permission_role, attrs) when is_map(attrs) do
     permission_role
     |> cast(attrs, [:permission_id, :role_id])
