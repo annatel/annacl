@@ -4,8 +4,8 @@ defmodule Annacl.MixProject do
   def project do
     [
       app: :annacl,
-      version: "0.2.0",
-      elixir: "~> 1.10",
+      version: "0.3.0",
+      elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),

@@ -1,5 +1,5 @@
 defmodule Annacl.Factory.Role do
-  alias Annacl.ACL.Roles.Role
+  alias Annacl.Roles.Role
 
   defmacro __using__(_opts) do
     quote do

@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 0.2.0"}
+    {:annacl, "~> 0.3.0"}
   ]
 end
 ```
@@ -48,13 +48,14 @@ mix ecto.migrate
 # config/config.exs
   config :annacl,
     repo: MyApp.Repo
+    superadmin_role_name: "superadmin" # The name of the role that bypass all roles and permissions.
 
 
 # lib/my_app/account/user.ex
 defmodule MyApp.Account.User do
   use Ecto.Schema
 
-  alias Annacl.ACL.Performers.Performer
+  alias Annacl.Performers.Performer
 
   schema "users" do
     belongs_to(:performer, Performer)
@@ -64,12 +65,11 @@ end
 
 # lib/my_app/account.ex
 defmodule MyApp.Accounts
-  import Annacl
+  use Annacl
 
   ...
 end
 
-# superadmin is a special role that bypass all roles and permissions
 {:ok, _superadmin_role} = Annacl.create_role("superadmin")
 
 {:ok, _user_role} = Annacl.create_role("user")

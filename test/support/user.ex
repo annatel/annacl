@@ -1,7 +1,7 @@
 defmodule Annacl.User do
   use Ecto.Schema
 
-  alias Annacl.ACL.Performers.Performer
+  alias Annacl.Performers.Performer
 
   embedded_schema do
     belongs_to(:performer, Performer)

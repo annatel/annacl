@@ -1,5 +1,5 @@
 defmodule Annacl.Factory.Performer do
-  alias Annacl.ACL.Performers.{Performer, PerformerPermission, PerformerRole}
+  alias Annacl.Performers.{Performer, PerformerPermission, PerformerRole}
 
   defmacro __using__(_opts) do
     quote do
