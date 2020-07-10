@@ -9,6 +9,7 @@ defmodule Annacl do
   alias Annacl.Roles.Role
   alias Annacl.Permissions
   alias Annacl.Permissions.Permission
+  alias Annacl.PermissionsRoles.PermissionRole
   alias Annacl.Performers
   alias Annacl.Performers.{PerformerRole, PerformerPermission}
 
@@ -57,7 +58,7 @@ defmodule Annacl do
   defdelegate assign_role_to_permission(permission, role), to: Permissions, as: :assign_role
 
   @spec remove_role_from_permission(Permission.t(), Role.t()) ::
-          {:ok, any} | {:error, Ecto.Changeset.t()}
+          {:ok, PermissionRole.t()} | {:error, Ecto.Changeset.t()}
   defdelegate remove_role_from_permission(permission, role), to: Permissions, as: :remove_role
 
   @spec create_role(binary()) :: {:ok, Role.t()} | {:error, Ecto.Changeset.t()}
