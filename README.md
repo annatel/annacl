@@ -87,15 +87,15 @@ superadmin = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "000
 
 user = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "00000000-0000-0000-0000-000000000001"}, "user")
 
+true = MyApp.Accounts.can?(user, "posts.list")
+true = MyApp.Accounts.can?(user, "posts.read")
+false = MyApp.Accounts.can?(user, "posts.create")
+false = MyApp.Accounts.can?(user, "posts.update")
+
 true = MyApp.Accounts.can?(superadmin, "posts.list")
 true = MyApp.Accounts.can?(superadmin, "posts.create")
 true = MyApp.Accounts.can?(superadmin, "posts.read")
 true = MyApp.Accounts.can?(superadmin, "posts.update")
-
-true = MyApp.Accounts.can?(user, "posts.list")
-false = MyApp.Accounts.can?(superadmin, "posts.create")
-true = MyApp.Accounts.can?(superadmin, "posts.read")
-false = MyApp.Accounts.can?(superadmin, "posts.update")
 ```
 
 Read the entire documentation [here](https://hex.pm/packages/annacl)
