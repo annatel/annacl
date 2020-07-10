@@ -12,6 +12,12 @@ defmodule Annacl.PerformersTest do
     1 => "00000000-0000-0000-0000-000000000001"
   }
 
+  describe "create_performer/0" do
+    test "creates the performer" do
+      assert {:ok, %Performer{}} = Performers.create_performer()
+    end
+  end
+
   describe "get_performer!/1" do
     test "when the performer does not exist, raise an Ecto.NoResultsError" do
       assert_raise Ecto.NoResultsError, fn ->

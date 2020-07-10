@@ -2,6 +2,7 @@ defmodule Annacl.Behaviour.RoleAndPermission do
   alias Annacl.Roles.Role
   alias Annacl.Permissions.Permission
   alias Annacl.PermissionsRoles.PermissionRole
+  alias Annacl.Performers.Performer
 
   @callback create_permission(binary()) :: {:ok, Permission.t()} | {:error, Ecto.Changeset.t()}
   @callback get_permission!(binary()) :: Permission.t()
@@ -18,4 +19,6 @@ defmodule Annacl.Behaviour.RoleAndPermission do
   @callback revoke_permission_from_role(Role.t(), Permission.t()) ::
               {:ok, PermissionRole.t()} | {:error, Ecto.Changeset.t()}
   @callback role_can?(Role.t(), Permission.t()) :: boolean
+
+  @callback create_performer() :: {:ok, Performer.t()} | {:error, Ecto.Changeset.t()}
 end

@@ -15,6 +15,13 @@ defmodule Annacl.Performers do
     |> repo().get!(id)
   end
 
+  @spec create_performer() :: {:ok, Performer.t()} | {:error, Ecto.Changeset.t()}
+  def create_performer() do
+    %Performer{}
+    |> Ecto.Changeset.change(%{})
+    |> repo().insert()
+  end
+
   @spec assign_role(Performer.t(), Role.t() | [Role.t()]) ::
           {:ok, PerformerRole.t() | [PerformerRole.t()]} | {:error, Ecto.Changeset.t()}
   def assign_role(%Performer{} = performer, %Role{} = role) do

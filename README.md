@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 0.4.1"}
+    {:annacl, "~> 0.5.0"}
   ]
 end
 ```
@@ -82,7 +82,14 @@ end
 Annacl.grant_permission_to_role(user_role, posts_list)
 Annacl.grant_permission_to_role(user_role, posts_read)
 
+# Create a performer for each user
+performer = Annacl.create_performer()
 
+my_user
+|> Ecto.Changeset.change(%{performer_id: performer.id})
+|> Repo.update!()
+
+# How to assign role to users
 superadmin = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "00000000-0000-0000-0000-000000000000"}, "superadmin")
 
 user = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "00000000-0000-0000-0000-000000000001"}, "user")

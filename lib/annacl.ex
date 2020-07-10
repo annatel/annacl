@@ -11,7 +11,7 @@ defmodule Annacl do
   alias Annacl.Permissions.Permission
   alias Annacl.PermissionsRoles.PermissionRole
   alias Annacl.Performers
-  alias Annacl.Performers.{PerformerRole, PerformerPermission}
+  alias Annacl.Performers.{Performer, PerformerRole, PerformerPermission}
 
   defmacro __using__(_opts) do
     quote do
@@ -84,6 +84,9 @@ defmodule Annacl do
 
   @spec role_can?(Role.t(), Permission.t()) :: boolean
   defdelegate role_can?(role, permission), to: Roles, as: :can?
+
+  @spec create_performer :: {:ok, Performer.t()} | {:error, Ecto.Changeset.t()}
+  defdelegate create_performer, to: Performers
 
   @spec assign_role!(%{performer_id: binary()}, binary()) ::
           {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}

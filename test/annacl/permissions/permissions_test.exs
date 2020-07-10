@@ -21,7 +21,8 @@ defmodule Annacl.PermissionsTest do
     test "when data is valid, creates the api_key" do
       permission_params = params_for(:permission)
 
-      assert {:ok, %Permission{} = api_key} = Permissions.create_permission(permission_params)
+      assert {:ok, %Permission{} = permission} = Permissions.create_permission(permission_params)
+      assert permission.name == permission_params.name
     end
   end
 
