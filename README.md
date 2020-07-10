@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 0.3.0"}
+    {:annacl, "~> 0.4.0"}
   ]
 end
 ```
