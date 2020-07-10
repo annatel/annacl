@@ -20,7 +20,7 @@ defmodule Annacl do
       unquote(__MODULE__)
 
       def assign_role!(%{performer_id: performer_id}, role_name),
-        do: unquote(__MODULE__).assign_role(%{performer_id: performer_id}, role_name)
+        do: unquote(__MODULE__).assign_role!(%{performer_id: performer_id}, role_name)
 
       def remove_role!(%{performer_id: performer_id}, role_name),
         do: unquote(__MODULE__).remove_role!(%{performer_id: performer_id}, role_name)

@@ -1,4 +1,4 @@
-defmodule Annacl.User do
+defmodule Annacl.TestUser do
   use Ecto.Schema
 
   alias Annacl.Performers.Performer
