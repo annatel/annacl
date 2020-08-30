@@ -18,7 +18,7 @@ defmodule AnnaclTest do
     end
 
     test "when user's performer_id does not exist, raises an Ecto.NoResultsError" do
-      user = build(:user, performer_id: Annacl.Factory.uuid())
+      user = build(:user, performer_id: 1)
       role = insert(:role)
 
       assert_raise Ecto.NoResultsError, fn ->
@@ -63,7 +63,7 @@ defmodule AnnaclTest do
     end
 
     test "when user's performer_id does not exist, raises an Ecto.NoResultsError" do
-      user = build(:user, performer_id: Annacl.Factory.uuid())
+      user = build(:user, performer_id: 1)
       role = insert(:role)
 
       assert_raise Ecto.NoResultsError, fn ->
@@ -114,7 +114,7 @@ defmodule AnnaclTest do
     end
 
     test "when user's performer_id does not exist, raises an Ecto.NoResultsError" do
-      user = build(:user, performer_id: Annacl.Factory.uuid())
+      user = build(:user, performer_id: 1)
       permission = insert(:permission)
 
       assert_raise Ecto.NoResultsError, fn ->
@@ -163,7 +163,7 @@ defmodule AnnaclTest do
     end
 
     test "when user's performer_id does not exist, raises an Ecto.NoResultsError" do
-      user = build(:user, performer_id: Annacl.Factory.uuid())
+      user = build(:user, performer_id: 1)
       permission = insert(:permission)
 
       assert_raise Ecto.NoResultsError, fn ->

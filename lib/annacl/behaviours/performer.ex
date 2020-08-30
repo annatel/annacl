@@ -4,17 +4,17 @@ defmodule Annacl.Behaviour.Performer do
   alias Annacl.Performers.PerformerRole
   alias Annacl.Performers.PerformerPermission
 
-  @callback assign_role!(%{performer_id: binary()}, binary()) ::
+  @callback assign_role!(%{performer_id: integer()}, binary()) ::
               {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}
-  @callback remove_role!(%{performer_id: binary()}, binary()) ::
+  @callback remove_role!(%{performer_id: integer()}, binary()) ::
               {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}
-  @callback grant_permission!(%{performer_id: binary()}, binary()) ::
+  @callback grant_permission!(%{performer_id: integer()}, binary()) ::
               {:ok, PerformerPermission.t()} | {:error, Ecto.Changeset.t()}
-  @callback revoke_permission!(%{performer_id: binary()}, binary()) ::
+  @callback revoke_permission!(%{performer_id: integer()}, binary()) ::
               {:ok, PerformerPermission.t()} | {:error, Ecto.Changeset.t()}
 
-  @callback has_role?(%{performer_id: binary()}, binary()) :: boolean
-  @callback can?(%{performer_id: binary()}, binary()) :: boolean
-  @callback list_roles(%{performer_id: binary()}) :: [Role.t()]
-  @callback list_permissions(%{performer_id: binary()}) :: [Permission.t()]
+  @callback has_role?(%{performer_id: integer()}, binary()) :: boolean
+  @callback can?(%{performer_id: integer()}, binary()) :: boolean
+  @callback list_roles(%{performer_id: integer()}) :: [Role.t()]
+  @callback list_permissions(%{performer_id: integer()}) :: [Permission.t()]
 end

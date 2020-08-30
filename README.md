@@ -78,6 +78,8 @@ defmodule MyApp.Accounts
   ...
 end
 
+# Don't forget to add the performer_id field in your user table via a migration
+
 {:ok, _superadmin_role} = Annacl.create_role("superadmin")
 
 {:ok, _user_role} = Annacl.create_role("user")
@@ -91,9 +93,9 @@ Annacl.grant_permission_to_role(user_role, posts_list)
 Annacl.grant_permission_to_role(user_role, posts_read)
 
 # How to assign role to users
-superadmin = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "00000000-0000-0000-0000-000000000000"}, "superadmin")
+superadmin = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: 1}, "superadmin")
 
-user = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: "00000000-0000-0000-0000-000000000001"}, "user")
+user = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: 2}, "user")
 
 true = MyApp.Accounts.can?(user, "posts.list")
 true = MyApp.Accounts.can?(user, "posts.read")
@@ -116,3 +118,9 @@ Duplicate env/example.env to env/test.env and source it.
 MIX_ENV=test mix do ecto.drop, ecto.create, ecto.migrate
 mix test
 ```
+
+## Upgrate from 0.5.0 to 1.0.0
+
+I removed the use of binary_id and due to a lack of time, did not provide an upgrade path. 
+If you want to upgrade you will need to re-create your roles and permissions and re-assign a performer to your model.
+MR for the upgrade path will be gratefully accepted.

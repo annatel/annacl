@@ -2,7 +2,10 @@ defmodule Annacl.Roles.Role do
   @moduledoc """
   Ecto Schema that represent a role.
   """
-  use Annacl.Schema
+  use Ecto.Schema
+
+  import Ecto.Changeset,
+    only: [cast: 3, validate_required: 2, unique_constraint: 2]
 
   alias Annacl.Permissions.Permission
   alias Annacl.PermissionsRoles.PermissionRole

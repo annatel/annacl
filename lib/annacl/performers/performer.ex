@@ -3,8 +3,9 @@ defmodule Annacl.Performers.Performer do
   A Performer is an Ecto schema used as the main actor for determining abilities.
 
   """
+  use Ecto.Schema
 
-  use Annacl.Schema
+  import Ecto.Changeset, only: [cast: 3]
 
   alias Annacl.Permissions.Permission
   alias Annacl.Roles.Role

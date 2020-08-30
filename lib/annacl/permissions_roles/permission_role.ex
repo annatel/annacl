@@ -2,7 +2,10 @@ defmodule Annacl.PermissionsRoles.PermissionRole do
   @moduledoc """
   Ecto Schema that represent the association between a permission and a role.
   """
-  use Annacl.Schema
+  use Ecto.Schema
+
+  import Ecto.Changeset,
+    only: [cast: 3, validate_required: 2, assoc_constraint: 2, unique_constraint: 3]
 
   alias Annacl.Permissions.Permission
   alias Annacl.Roles.Role

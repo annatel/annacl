@@ -2,7 +2,10 @@ defmodule Annacl.Permissions.Permission do
   @moduledoc """
   Ecto Schema that represent a permission.
   """
-  use Annacl.Schema
+  use Ecto.Schema
+
+  import Ecto.Changeset,
+    only: [cast: 3, validate_required: 2, unique_constraint: 2]
 
   schema "annacl_permissions" do
     field(:name, :string)

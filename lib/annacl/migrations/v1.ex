@@ -22,8 +22,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_permissions_table do
-    create table(:annacl_permissions, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:annacl_permissions) do
       add(:name, :string)
 
       timestamps()
@@ -37,8 +36,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_roles_table do
-    create table(:annacl_roles, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:annacl_roles) do
       add(:name, :string)
 
       timestamps()
@@ -52,11 +50,9 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_permission_role_table do
-    create table(:annacl_permission_annacl_role, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
-
-      add(:role_id, references(:annacl_roles, on_delete: :delete_all, type: :uuid))
-      add(:permission_id, references(:annacl_permissions, on_delete: :delete_all, type: :uuid))
+    create table(:annacl_permission_annacl_role) do
+      add(:role_id, references(:annacl_roles, on_delete: :delete_all))
+      add(:permission_id, references(:annacl_permissions, on_delete: :delete_all))
 
       timestamps()
     end
@@ -73,9 +69,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_performers_table do
-    create table(:annacl_performers, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
-
+    create table(:annacl_performers) do
       timestamps()
     end
   end
@@ -85,11 +79,9 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_performer_role_table do
-    create table(:annacl_performer_annacl_role, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
-
-      add(:performer_id, references(:annacl_performers, on_delete: :delete_all, type: :uuid))
-      add(:role_id, references(:annacl_roles, on_delete: :delete_all, type: :uuid))
+    create table(:annacl_performer_annacl_role) do
+      add(:performer_id, references(:annacl_performers, on_delete: :delete_all))
+      add(:role_id, references(:annacl_roles, on_delete: :delete_all))
 
       timestamps()
     end
@@ -106,11 +98,9 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp create_performer_permission_table do
-    create table(:annacl_performer_annacl_permission, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
-
-      add(:performer_id, references(:annacl_performers, on_delete: :delete_all, type: :uuid))
-      add(:permission_id, references(:annacl_permissions, on_delete: :delete_all, type: :uuid))
+    create table(:annacl_performer_annacl_permission) do
+      add(:performer_id, references(:annacl_performers, on_delete: :delete_all))
+      add(:permission_id, references(:annacl_permissions, on_delete: :delete_all))
 
       timestamps()
     end

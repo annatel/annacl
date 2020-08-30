@@ -88,7 +88,7 @@ defmodule Annacl do
   @spec create_performer :: {:ok, Performer.t()} | {:error, Ecto.Changeset.t()}
   defdelegate create_performer, to: Performers
 
-  @spec assign_role!(%{performer_id: binary()}, binary()) ::
+  @spec assign_role!(%{performer_id: integer()}, binary()) ::
           {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}
   def assign_role!(%{performer_id: performer_id}, role_name) do
     role = get_role!(role_name)
@@ -98,7 +98,7 @@ defmodule Annacl do
     |> Performers.assign_role(role)
   end
 
-  @spec remove_role!(%{performer_id: binary()}, binary()) ::
+  @spec remove_role!(%{performer_id: integer()}, binary()) ::
           {:ok, PerformerRole.t()} | {:error, Ecto.Changeset.t()}
   def remove_role!(%{performer_id: performer_id}, role_name) do
     role = get_role!(role_name)
@@ -108,7 +108,7 @@ defmodule Annacl do
     |> Performers.remove_role(role)
   end
 
-  @spec grant_permission!(%{performer_id: binary()}, binary()) ::
+  @spec grant_permission!(%{performer_id: integer()}, binary()) ::
           {:ok, PerformerPermission.t()} | {:error, Ecto.Changeset.t()}
   def grant_permission!(%{performer_id: performer_id}, permission_name) do
     permission = get_permission!(permission_name)
@@ -118,7 +118,7 @@ defmodule Annacl do
     |> Performers.grant_permission(permission)
   end
 
-  @spec revoke_permission!(%{performer_id: binary()}, binary()) ::
+  @spec revoke_permission!(%{performer_id: integer()}, binary()) ::
           {:ok, PerformerPermission.t()} | {:error, Ecto.Changeset.t()}
   def revoke_permission!(%{performer_id: performer_id}, permission_name) do
     permission = get_permission!(permission_name)
@@ -128,7 +128,7 @@ defmodule Annacl do
     |> Performers.revoke_permission(permission)
   end
 
-  @spec has_role?(%{performer_id: binary()}, binary) :: boolean
+  @spec has_role?(%{performer_id: integer()}, binary) :: boolean
   def has_role?(%{performer_id: performer_id}, role_name) when is_binary(role_name) do
     role = get_role!(role_name)
     superadmin_role = Roles.get_role(superadmin_role_name())
@@ -139,7 +139,7 @@ defmodule Annacl do
       Performers.has_role?(performer, role)
   end
 
-  @spec can?(%{performer_id: binary()}, binary) :: boolean
+  @spec can?(%{performer_id: integer()}, binary) :: boolean
   def can?(%{performer_id: performer_id}, permission_name) when is_binary(permission_name) do
     permission = get_permission!(permission_name)
     superadmin_role = Roles.get_role(superadmin_role_name())
@@ -150,14 +150,14 @@ defmodule Annacl do
       Performers.can?(performer, permission)
   end
 
-  @spec list_roles(%{performer_id: binary()}) :: [Role.t()]
+  @spec list_roles(%{performer_id: integer()}) :: [Role.t()]
   def list_roles(%{performer_id: performer_id}) do
     performer_id
     |> Performers.get_performer!()
     |> Performers.list_roles()
   end
 
-  @spec list_permissions(%{performer_id: binary()}) :: [Permission.t()]
+  @spec list_permissions(%{performer_id: integer()}) :: [Permission.t()]
   def list_permissions(%{performer_id: performer_id}) do
     performer_id
     |> Performers.get_performer!()

@@ -7,11 +7,9 @@ defmodule Annacl.PermissionsRolesTest do
   alias Annacl.PermissionsRoles
   alias Annacl.PermissionsRoles.PermissionRole
 
-  @uuids %{0 => "00000000-0000-0000-0000-000000000000"}
-
   describe "create_permission_role/1" do
     test "when permission does not exist, returns an invalid changeset" do
-      permission = build(:permission, id: @uuids[0])
+      permission = build(:permission, id: 1)
       role = insert(:role)
 
       assert {:error, %Ecto.Changeset{} = changeset} =
@@ -23,7 +21,7 @@ defmodule Annacl.PermissionsRolesTest do
 
     test "when role does not exist, returns an invalid changeset" do
       permission = insert(:permission)
-      role = build(:role, id: @uuids[0])
+      role = build(:role, id: 1)
 
       assert {:error, %Ecto.Changeset{} = changeset} =
                PermissionsRoles.create_permission_role(permission, role)

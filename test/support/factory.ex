@@ -7,9 +7,4 @@ defmodule Annacl.Factory do
 
   use Annacl.Factory.Performer
   use Annacl.Factory.User
-
-  @spec uuid :: <<_::288>>
-  def uuid() do
-    Ecto.UUID.generate()
-  end
 end

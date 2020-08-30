@@ -9,7 +9,7 @@ defmodule Annacl.PermissionsRoles do
   @spec create_permission_role(Permission.t(), Role.t()) ::
           {:ok, PermissionRole.t()} | {:error, Ecto.Changeset.t()}
   def create_permission_role(%Permission{id: permission_id}, %Role{id: role_id})
-      when is_binary(permission_id) and is_binary(role_id) do
+      when is_integer(permission_id) and is_integer(role_id) do
     %PermissionRole{}
     |> PermissionRole.changeset(%{permission_id: permission_id, role_id: role_id})
     |> repo().insert()
@@ -18,7 +18,7 @@ defmodule Annacl.PermissionsRoles do
   @spec delete_permission_role(Permission.t(), Role.t()) ::
           {:ok, PermissionRole.t()} | {:error, Ecto.Changeset.t()}
   def delete_permission_role(%Permission{id: permission_id}, %Role{id: role_id})
-      when is_binary(permission_id) and is_binary(role_id) do
+      when is_integer(permission_id) and is_integer(role_id) do
     PermissionRole
     |> where(permission_id: ^permission_id, role_id: ^role_id)
     |> repo().one!()

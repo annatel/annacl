@@ -7,11 +7,6 @@ defmodule Annacl.PerformersTest do
   alias Annacl.Performers
   alias Annacl.Performers.{Performer, PerformerRole, PerformerPermission}
 
-  @uuids %{
-    0 => "00000000-0000-0000-0000-000000000000",
-    1 => "00000000-0000-0000-0000-000000000001"
-  }
-
   describe "create_performer/0" do
     test "creates the performer" do
       assert {:ok, %Performer{}} = Performers.create_performer()
@@ -21,7 +16,7 @@ defmodule Annacl.PerformersTest do
   describe "get_performer!/1" do
     test "when the performer does not exist, raise an Ecto.NoResultsError" do
       assert_raise Ecto.NoResultsError, fn ->
-        Performers.get_performer!(@uuids[0])
+        Performers.get_performer!(1)
       end
     end
 
@@ -37,7 +32,7 @@ defmodule Annacl.PerformersTest do
   describe "assign_role/2 - element" do
     test "when the role does not exist, returns an invalid changeset" do
       performer = insert(:performer)
-      role = build(:role, id: @uuids[1])
+      role = build(:role, id: 1)
 
       assert Performers.assign_role(performer, role) == Performers.assign_role(performer, [role])
     end
@@ -64,8 +59,8 @@ defmodule Annacl.PerformersTest do
   describe "assign_role/2 - list" do
     test "when one of the roles does not exist, returns an invalid changeset" do
       performer = insert(:performer)
-      role_1 = insert(:role, id: @uuids[0])
-      role_2 = build(:role, id: @uuids[1])
+      role_1 = insert(:role, id: 1)
+      role_2 = build(:role, id: 2)
 
       assert {:error, %Ecto.Changeset{} = changeset} =
                Performers.assign_role(performer, [role_1, role_2])
@@ -127,7 +122,7 @@ defmodule Annacl.PerformersTest do
   describe "grant_permission/2 - element" do
     test "when the permission does not exist, returns an invalid changeset" do
       performer = insert(:performer)
-      permission = build(:permission, id: @uuids[1])
+      permission = build(:permission, id: 1)
 
       assert Performers.grant_permission(performer, permission) ==
                Performers.grant_permission(performer, [permission])
@@ -171,8 +166,8 @@ defmodule Annacl.PerformersTest do
   describe "grant_permission/2 - list" do
     test "when one of the permission does not exist, returns an invalid changeset" do
       performer = insert(:performer)
-      permission_1 = insert(:permission, id: @uuids[0])
-      permission_2 = build(:permission, id: @uuids[1])
+      permission_1 = insert(:permission, id: 1)
+      permission_2 = build(:permission, id: 2)
 
       assert {:error, %Ecto.Changeset{} = changeset} =
                Performers.grant_permission(performer, [permission_1, permission_2])

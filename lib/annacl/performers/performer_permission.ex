@@ -2,7 +2,10 @@ defmodule Annacl.Performers.PerformerPermission do
   @moduledoc """
   Ecto Schema that represent an association between a performer and a permission.
   """
-  use Annacl.Schema
+  use Ecto.Schema
+
+  import Ecto.Changeset,
+    only: [cast: 3, validate_required: 2, assoc_constraint: 2, unique_constraint: 3]
 
   alias Annacl.Performers.Performer
   alias Annacl.Permissions.Permission

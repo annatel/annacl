@@ -8,8 +8,8 @@ defmodule Annacl.Performers do
   alias Annacl.Permissions.Permission
   alias Annacl.Roles.Role
 
-  @spec get_performer!(binary()) :: Performer.t()
-  def get_performer!(id) when is_binary(id) do
+  @spec get_performer!(integer()) :: Performer.t()
+  def get_performer!(id) when is_integer(id) do
     Performer
     |> preload([[roles: :permissions], :permissions])
     |> repo().get!(id)
