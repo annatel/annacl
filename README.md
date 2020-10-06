@@ -1,6 +1,6 @@
 # Annacl
 
-[![Actions Status](https://github.com/annatel/annacl/workflows/CI/badge.svg)](https://github.com/annatel/annacl/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/annatel/annacl/CI?cacheSeconds=3600&style=flat-square)](https://github.com/annatel/annacl/actions) [![GitHub issues](https://img.shields.io/github/issues-raw/annatel/annacl?style=flat-square&cacheSeconds=3600)](https://github.com/annatel/annacl/issues) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?cacheSeconds=3600?style=flat-square)](http://opensource.org/licenses/MIT) [![Hex.pm](https://img.shields.io/hexpm/v/annacl?style=flat-square)](https://hex.pm/packages/annacl) [![Hex.pm](https://img.shields.io/hexpm/dt/annacl?style=flat-square)](https://hex.pm/packages/annacl)
 
 Associate models with permissions and roles.
 
@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 0.5.0"}
+    {:annacl, "~> 1.0"}
   ]
 end
 ```
