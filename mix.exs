@@ -1,28 +1,30 @@
 defmodule Annacl.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/annatel/annacl"
+  @version "1.1.0"
+
   def project do
     [
       app: :annacl,
-      version: "1.0.0",
+      version: @version,
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
-      aliases: aliases()
+      aliases: aliases(),
+      docs: docs()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
@@ -47,8 +49,18 @@ defmodule Annacl.MixProject do
 
   defp package() do
     [
-      licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/annatel/annacl"}
+      licenses: ["MIT"],
+      links: %{"GitHub" => @source_url}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_url: @source_url,
+      extras: [
+        "README.md"
+      ]
     ]
   end
 end

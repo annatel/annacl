@@ -164,7 +164,8 @@ defmodule Annacl do
     |> Performers.list_permissions()
   end
 
-  defp superadmin_role_name() do
+  @spec superadmin_role_name :: binary()
+  def superadmin_role_name() do
     Application.get_env(:annacl, :superadmin_role_name, "superadmin")
   end
 end

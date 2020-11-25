@@ -115,7 +115,7 @@ defmodule Annacl.PerformersTest do
       role = insert(:role)
       insert(:performer_role, performer_id: performer.id, role_id: role.id)
 
-      assert {:ok, %PerformerRole{} = performer_role} = Performers.remove_role(performer, role)
+      assert {:ok, %PerformerRole{} = _performer_role} = Performers.remove_role(performer, role)
     end
   end
 
@@ -238,7 +238,7 @@ defmodule Annacl.PerformersTest do
       permission = insert(:permission)
       insert(:performer_permission, performer_id: performer.id, permission_id: permission.id)
 
-      assert {:ok, %PerformerPermission{} = performer_permission} =
+      assert {:ok, %PerformerPermission{} = _performer_permission} =
                Performers.revoke_permission(performer, permission)
     end
   end
@@ -346,10 +346,10 @@ defmodule Annacl.PerformersTest do
 
     test "when performer has roles" do
       performer = insert(:performer)
-      role = insert(:role)
-      insert(:performer_role, performer_id: performer.id, role_id: role.id)
+      %{id: role_id} = insert(:role)
+      insert(:performer_role, performer_id: performer.id, role_id: role_id)
 
-      assert [role] = Performers.list_roles(performer)
+      assert [%{id: ^role_id}] = Performers.list_roles(performer)
     end
   end
 
@@ -368,7 +368,7 @@ defmodule Annacl.PerformersTest do
       insert(:permission_role, permission_id: permission.id, role_id: role.id)
       insert(:performer_role, performer_id: performer.id, role_id: role.id)
 
-      assert [permission] = Performers.list_permissions(performer)
+      assert [^permission] = Performers.list_permissions(performer)
     end
 
     test "when performer has direct permissions besides roles' permissions" do
