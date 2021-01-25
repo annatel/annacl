@@ -3,15 +3,13 @@ defmodule Annacl.Factory.Role do
 
   defmacro __using__(_opts) do
     quote do
-      def role_factory do
+      def build(:role) do
         %Role{
-          name: sequence("name_")
+          name: "name_#{System.unique_integer()}"
         }
       end
 
-      def role_superadmin(api_key) do
-        %{api_key | name: "superadmin"}
-      end
+      def superadmin_role(%Role{} = role), do: %{role | name: Annacl.superadmin_role_name()}
     end
   end
 end

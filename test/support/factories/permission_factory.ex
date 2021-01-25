@@ -3,9 +3,9 @@ defmodule Annacl.Factory.Permission do
 
   defmacro __using__(_opts) do
     quote do
-      def permission_factory do
+      def build(:permission) do
         %Permission{
-          name: sequence("name_")
+          name: "name_#{System.unique_integer()}"
         }
       end
     end

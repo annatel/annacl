@@ -12,9 +12,22 @@ defmodule Annacl.Performers.Performer do
   alias Annacl.Performers.PerformerPermission
   alias Annacl.Performers.PerformerRole
 
+  @type t :: %__MODULE__{
+          id: binary,
+          inserted_at: DateTime.t(),
+          permissions: [Permission.t()],
+          roles: [Role.t()],
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_performers" do
-    many_to_many(:permissions, Permission, join_through: PerformerPermission)
-    many_to_many(:roles, Role, join_through: PerformerRole)
+    many_to_many(:permissions, Permission,
+      join_through: PerformerPermission,
+      on_replace: :delete,
+      unique: true
+    )
+
+    many_to_many(:roles, Role, join_through: PerformerRole, on_replace: :delete, unique: true)
 
     timestamps()
   end

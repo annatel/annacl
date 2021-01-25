@@ -2,8 +2,6 @@ defmodule Annacl.Permissions.PermissionTest do
   use ExUnit.Case, async: true
   use Annacl.DataCase
 
-  import Annacl.Factory
-
   alias Annacl.Permissions.Permission
 
   describe "changeset/2" do
@@ -26,14 +24,6 @@ defmodule Annacl.Permissions.PermissionTest do
 
       refute changeset.valid?
       assert %{name: ["can't be blank"]} = errors_on(changeset)
-    end
-
-    test "when all params are valid, returns an valid changeset" do
-      permission_params = params_for(:permission)
-
-      changeset = Permission.changeset(%Permission{}, permission_params)
-
-      assert changeset.valid?
     end
   end
 end

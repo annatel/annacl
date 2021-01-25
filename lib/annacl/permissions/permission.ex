@@ -7,6 +7,13 @@ defmodule Annacl.Permissions.Permission do
   import Ecto.Changeset,
     only: [cast: 3, validate_required: 2, unique_constraint: 2]
 
+  @type t :: %__MODULE__{
+          id: integer,
+          inserted_at: DateTime.t(),
+          name: binary,
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_permissions" do
     field(:name, :string)
 

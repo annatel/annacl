@@ -10,6 +10,16 @@ defmodule Annacl.Performers.PerformerPermission do
   alias Annacl.Performers.Performer
   alias Annacl.Permissions.Permission
 
+  @type t :: %__MODULE__{
+          id: integer,
+          inserted_at: DateTime.t(),
+          performer: Performer.t(),
+          performer_id: integer,
+          permission: Permission.t(),
+          permission_id: integer,
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_performer_annacl_permission" do
     belongs_to(:performer, Performer)
     belongs_to(:permission, Permission)

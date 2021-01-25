@@ -10,6 +10,14 @@ defmodule Annacl.Performers.PerformerRole do
   alias Annacl.Performers.Performer
   alias Annacl.Roles.Role
 
+  @type t :: %__MODULE__{
+          id: integer,
+          inserted_at: DateTime.t(),
+          performer_id: integer,
+          role_id: integer,
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_performer_annacl_role" do
     belongs_to(:performer, Performer)
     belongs_to(:role, Role)

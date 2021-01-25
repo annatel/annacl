@@ -10,6 +10,14 @@ defmodule Annacl.PermissionsRoles.PermissionRole do
   alias Annacl.Permissions.Permission
   alias Annacl.Roles.Role
 
+  @type t :: %__MODULE__{
+          id: integer,
+          inserted_at: DateTime.t(),
+          permission_id: integer,
+          role_id: integer,
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_permission_annacl_role" do
     belongs_to(:permission, Permission)
     belongs_to(:role, Role)

@@ -2,7 +2,7 @@ defmodule Annacl.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/annatel/annacl"
-  @version "1.1.0"
+  @version "2.0.0"
 
   def project do
     [
@@ -28,9 +28,9 @@ defmodule Annacl.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ex_machina, "~> 2.3", only: :test},
       {:myxql, "~> 0.4.0", only: :test},
-      {:ecto_sql, "~> 3.0"}
+      {:ecto_sql, "~> 3.0"},
+      {:antl_utils_ecto, "~> 1.2.0", only: :test}
     ]
   end
 

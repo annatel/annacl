@@ -3,7 +3,7 @@ defmodule Annacl.Factory.PermissionRole do
 
   defmacro __using__(_opts) do
     quote do
-      def permission_role_factory do
+      def build(:permission_role) do
         %PermissionRole{}
       end
     end
