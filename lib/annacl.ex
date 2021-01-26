@@ -12,40 +12,46 @@ defmodule Annacl do
   alias Annacl.Performers
   alias Annacl.Performers.Performer
 
+  @type performer_container :: %{:performer_id => integer, optional(atom) => any}
+
   defmacro __using__(_opts) do
     quote do
       @behaviour Annacl.Behaviour.Performer
 
       unquote(__MODULE__)
 
-      @spec assign_role!(%{performer_id: integer}, binary | [binary]) :: map
+      @spec assign_role!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
       def assign_role!(parent, roles_name),
         do: unquote(__MODULE__).assign_role!(parent, roles_name)
 
-      @spec remove_role!(%{performer_id: integer}, binary | [binary]) :: map
+      @spec remove_role!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
       def remove_role!(parent, roles_name),
         do: unquote(__MODULE__).remove_role!(parent, roles_name)
 
-      @spec grant_permission!(%{performer_id: integer}, binary | [binary]) :: map
+      @spec grant_permission!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
       def grant_permission!(parent, permissions_name),
         do: unquote(__MODULE__).grant_permission!(parent, permissions_name)
 
-      @spec revoke_permission!(%{performer_id: integer}, binary | [binary]) :: map
+      @spec revoke_permission!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
       def revoke_permission!(parent, permissions_name),
         do: unquote(__MODULE__).revoke_permission!(parent, permissions_name)
 
-      @spec has_role?(%{performer_id: integer}, binary) :: boolean
+      @spec has_role?(Annacl.performer_container(), binary) :: boolean
       def has_role?(parent, role_name), do: unquote(__MODULE__).has_role?(parent, role_name)
 
-      @spec has_permission?(%{performer_id: integer}, binary) :: boolean
+      @spec has_permission?(Annacl.performer_container(), binary) :: boolean
       def has_permission?(parent, permission_name),
         do: unquote(__MODULE__).has_permission?(parent, permission_name)
 
-      @spec list_roles(%{performer_id: integer}) :: [Role.t()]
+      @spec list_roles(Annacl.performer_container()) :: [Role.t()]
       def list_roles(parent),
         do: unquote(__MODULE__).list_roles(parent)
 
-      @spec list_permissions(%{performer_id: integer}) :: [Permission.t()]
+      @spec list_permissions(Annacl.performer_container()) :: [Permission.t()]
       def list_permissions(parent), do: unquote(__MODULE__).list_permissions(parent)
     end
   end
@@ -93,42 +99,46 @@ defmodule Annacl do
   @spec create_performer :: {:ok, Performer.t()} | {:error, Ecto.Changeset.t()}
   defdelegate create_performer, to: Performers
 
-  @spec assign_role!(%{performer_id: integer}, binary | [binary]) :: map
+  @spec assign_role!(Annacl.performer_container(), binary | [binary]) ::
+          Annacl.performer_container()
   def assign_role!(%{performer_id: performer_id} = parent, roles_name) do
     performer_id |> Performers.get_performer!() |> Performers.assign_role!(roles_name)
 
     parent
   end
 
-  @spec remove_role!(%{performer_id: integer}, binary | [binary]) :: map
+  @spec remove_role!(Annacl.performer_container(), binary | [binary]) ::
+          Annacl.performer_container()
   def remove_role!(%{performer_id: performer_id} = parent, roles_name) do
     performer_id |> Performers.get_performer!() |> Performers.remove_role!(roles_name)
 
     parent
   end
 
-  @spec grant_permission!(%{performer_id: integer}, binary | [binary]) :: map
+  @spec grant_permission!(Annacl.performer_container(), binary | [binary]) ::
+          Annacl.performer_container()
   def grant_permission!(%{performer_id: performer_id} = parent, permissions_name) do
     performer_id |> Performers.get_performer!() |> Performers.grant_permission!(permissions_name)
 
     parent
   end
 
-  @spec revoke_permission!(%{performer_id: integer}, binary | [binary]) :: map
+  @spec revoke_permission!(Annacl.performer_container(), binary | [binary]) ::
+          Annacl.performer_container()
   def revoke_permission!(%{performer_id: performer_id} = parent, permissions_name) do
     performer_id |> Performers.get_performer!() |> Performers.revoke_permission!(permissions_name)
 
     parent
   end
 
-  @spec has_role?(%{performer_id: integer}, binary) :: boolean
+  @spec has_role?(Annacl.performer_container(), binary) :: boolean
   def has_role?(%{performer_id: performer_id}, role_name) when is_binary(role_name) do
     performer_id
     |> Performers.get_performer!()
     |> Performers.has_any_roles?([superadmin_role_name(), role_name])
   end
 
-  @spec has_permission?(%{performer_id: integer}, binary) :: boolean
+  @spec has_permission?(Annacl.performer_container(), binary) :: boolean
   def has_permission?(%{performer_id: performer_id}, permission_name)
       when is_binary(permission_name) do
     performer = Performers.get_performer!(performer_id)
@@ -137,14 +147,14 @@ defmodule Annacl do
       Performers.has_permission?(performer, permission_name)
   end
 
-  @spec list_roles(%{performer_id: integer}) :: [Role.t()]
+  @spec list_roles(Annacl.performer_container()) :: [Role.t()]
   def list_roles(%{performer_id: performer_id}) do
     performer_id
     |> Performers.get_performer!()
     |> Performers.list_roles()
   end
 
-  @spec list_permissions(%{performer_id: integer}) :: [Permission.t()]
+  @spec list_permissions(Annacl.performer_container()) :: [Permission.t()]
   def list_permissions(%{performer_id: performer_id}) do
     performer_id
     |> Performers.get_performer!()

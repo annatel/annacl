@@ -2,15 +2,19 @@ defmodule Annacl.Behaviour.Performer do
   alias Annacl.Roles.Role
   alias Annacl.Permissions.Permission
 
-  @callback assign_role!(%{performer_id: integer}, binary | [binary]) :: Performer.t()
-  @callback remove_role!(%{performer_id: integer}, binary | [binary]) :: Performer.t()
+  @callback assign_role!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
+  @callback remove_role!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
 
-  @callback grant_permission!(%{performer_id: integer}, binary | [binary]) :: Performer.t()
-  @callback revoke_permission!(%{performer_id: integer}, binary | [binary]) :: Performer.t()
+  @callback grant_permission!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
+  @callback revoke_permission!(Annacl.performer_container(), binary | [binary]) ::
+              Annacl.performer_container()
 
-  @callback has_role?(%{performer_id: integer}, binary) :: boolean
-  @callback has_permission?(%{performer_id: integer}, binary) :: boolean
+  @callback has_role?(Annacl.performer_container(), binary) :: boolean
+  @callback has_permission?(Annacl.performer_container(), binary) :: boolean
 
-  @callback list_roles(%{performer_id: integer}) :: [Role.t()]
-  @callback list_permissions(%{performer_id: integer}) :: [Permission.t()]
+  @callback list_roles(Annacl.performer_container()) :: [Role.t()]
+  @callback list_permissions(Annacl.performer_container()) :: [Permission.t()]
 end

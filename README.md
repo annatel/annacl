@@ -65,11 +65,9 @@ defmodule MyApp.Account.User do
   end
 
   def create_changeset(%__MODULE__{} = user, attrs) when is_map(attrs) do
-    attrs = attrs |> Map.put(:performer, %{})
-
     user
     |> cast(attrs, [])
-    |> cast_assoc(:performer, required: true)
+    |> put_assoc(:performer, %{})
   end
 end
 
