@@ -30,7 +30,7 @@ defmodule Annacl.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:myxql, "~> 0.4.0", only: :test},
       {:ecto_sql, "~> 3.0"},
-      {:antl_utils_ecto, "~> 1.2.0", only: :test}
+      {:antl_utils_ecto, "~> 1.2.1", only: :test}
     ]
   end
 
