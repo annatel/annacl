@@ -13,7 +13,7 @@ Annacl is published on [Hex](https://hex.pm/packages/annacl). The package can be
 ```elixir
 def deps do
   [
-    {:annacl, "~> 1.0"}
+    {:annacl, "~> 2.0.0"}
   ]
 end
 ```
@@ -49,8 +49,11 @@ mix ecto.migrate
   config :annacl,
     repo: MyApp.Repo
     superadmin_role_name: "superadmin" # The name of the role that bypass all roles and permissions.
+```
 
+You have to add a integer fields named `performer_id` to the schema you want to add the permissions and roles.
 
+```elixir
 # lib/my_app/account/user.ex
 defmodule MyApp.Account.User do
   use Ecto.Schema
@@ -62,11 +65,9 @@ defmodule MyApp.Account.User do
   end
 
   def create_changeset(%__MODULE__{} = user, attrs) when is_map(attrs) do
-    attrs = attrs |> Map.put(:performer, %{})
-
     user
     |> cast(attrs, [])
-    |> cast_assoc(:performer, required: true)
+    |> put_assoc(:performer, %{})
   end
 end
 
@@ -80,32 +81,33 @@ end
 
 # Don't forget to add the performer_id field in your user table via a migration
 
-{:ok, _superadmin_role} = Annacl.create_role("superadmin")
+{:ok, _superadmin_role} = Annacl.create_role(Annacl.superadmin_role_name())
 
 {:ok, _user_role} = Annacl.create_role("user")
 
-{:ok, posts_list} = Annacl.create_permission("posts.list")
-{:ok, posts_create} = Annacl.create_permission("posts.create")
-{:ok, posts_read} = Annacl.create_permission("posts.read")
-{:ok, posts_update} = Annacl.create_permission("post.udpate")
+{:ok, _} = Annacl.create_permission("posts.list")
+{:ok, _} = Annacl.create_permission("posts.create")
+{:ok, _} = Annacl.create_permission("posts.read")
+{:ok, _} = Annacl.create_permission("post.udpate")
 
-Annacl.grant_permission_to_role(user_role, posts_list)
-Annacl.grant_permission_to_role(user_role, posts_read)
+Annacl.grant_permission_to_role(user_role, ["posts.list", "posts.read"])
 
 # How to assign role to users
-superadmin = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: 1}, "superadmin")
+user = %MyApp.Accounts.User{performer_id: 1}
 
-user = MyApp.Accounts.assign_role!(%MyApp.Accounts.User{performer_id: 2}, "user")
+MyApp.Accounts.assign_role!(user, Annacl.superadmin_role_name())
 
-true = MyApp.Accounts.can?(user, "posts.list")
-true = MyApp.Accounts.can?(user, "posts.read")
-false = MyApp.Accounts.can?(user, "posts.create")
-false = MyApp.Accounts.can?(user, "posts.update")
+MyApp.Accounts.assign_role!(user, "user")
 
-true = MyApp.Accounts.can?(superadmin, "posts.list")
-true = MyApp.Accounts.can?(superadmin, "posts.create")
-true = MyApp.Accounts.can?(superadmin, "posts.read")
-true = MyApp.Accounts.can?(superadmin, "posts.update")
+true = MyApp.Accounts.has_permission?(user, "posts.list")
+true = MyApp.Accounts.has_permission?(user, "posts.read")
+false = MyApp.Accounts.has_permission?(user, "posts.create")
+false = MyApp.Accounts.has_permission?(user, "posts.update")
+
+true = MyApp.Accounts.has_permission?(superadmin, "posts.list")
+true = MyApp.Accounts.has_permission?(superadmin, "posts.create")
+true = MyApp.Accounts.has_permission?(superadmin, "posts.read")
+true = MyApp.Accounts.has_permission?(superadmin, "posts.update")
 ```
 
 Read the entire documentation [here](https://hex.pm/packages/annacl)
@@ -118,9 +120,3 @@ Duplicate env/example.env to env/test.env and source it.
 MIX_ENV=test mix do ecto.drop, ecto.create, ecto.migrate
 mix test
 ```
-
-## Upgrate from 0.5.0 to 1.0.0
-
-I removed the use of binary_id and due to a lack of time, did not provide an upgrade path. 
-If you want to upgrade you will need to re-create your roles and permissions and re-assign a performer to your model.
-MR for the upgrade path will be gratefully accepted.

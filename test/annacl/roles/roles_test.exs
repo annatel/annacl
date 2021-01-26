@@ -2,103 +2,98 @@ defmodule Annacl.RolesTest do
   use ExUnit.Case, async: true
   use Annacl.DataCase
 
-  import Annacl.Factory
-
   alias Annacl.Roles
   alias Annacl.Roles.Role
-  alias Annacl.PermissionsRoles.PermissionRole
 
   describe "create_role/1" do
-    test "when data is invalid, returns an error tuple with an invalid changeset" do
-      role_params = params_for(:role, name: nil)
-
-      assert {:error, changeset} = Roles.create_role(role_params)
-
-      refute changeset.valid?
-      assert %{name: ["can't be blank"]} = errors_on(changeset)
-    end
-
     test "when data is valid, creates the api_key" do
       role_params = params_for(:role)
 
       assert {:ok, %Role{} = role} = Roles.create_role(role_params)
       assert role.name == role_params.name
     end
+
+    test "when data is invalid, returns an error tuple with an invalid changeset" do
+      assert {:error, changeset} = Roles.create_role(%{})
+
+      refute changeset.valid?
+      assert %{name: ["can't be blank"]} = errors_on(changeset)
+    end
   end
 
-  describe "get_role" do
-    test "when role does not exist, returns nil" do
-      assert is_nil(Roles.get_role("role"))
+  describe "get_role/1" do
+    test "when the role exists, returns the role" do
+      %{id: id, name: name} = insert!(:role)
+
+      assert %Role{id: ^id, name: ^name, permissions: []} = Roles.get_role(name)
     end
 
-    test "when role exists, returns the role" do
-      role_factory = insert(:role)
-
-      role = Roles.get_role(role_factory.name)
-      assert %Role{} = role
-      assert role.id == role_factory.id
-      assert role.permissions == []
+    test "when role does not exist, returns nil" do
+      assert is_nil(Roles.get_role("role"))
     end
   end
 
   describe "get_role!/1" do
+    test "when role exists, returns the role" do
+      %{id: id, name: name} = insert!(:role)
+
+      assert %Role{id: ^id, name: ^name, permissions: []} = Roles.get_role!(name)
+    end
+
     test "when role does not exist, returns nil" do
       assert_raise Ecto.NoResultsError, fn ->
         Roles.get_role!("role")
       end
     end
-
-    test "when role exists, returns the role" do
-      role_factory = insert(:role)
-
-      role = Roles.get_role!(role_factory.name)
-      assert %Role{} = role
-      assert role.id == role_factory.id
-      assert role.permissions == []
-    end
   end
 
-  describe "grant_permission/2" do
-    test "grant an already granted permission, returns an invalid changeset" do
-      role = insert(:role)
-      permission = insert(:permission)
-      insert(:permission_role, permission_id: permission.id, role_id: role.id)
+  describe "grant_permission!/2" do
+    test "grant an non existing permission, create the permission, grant it to the role and returns the role" do
+      role = insert!(:role)
+      permission_params = params_for(:permission)
 
-      assert {:error, %Ecto.Changeset{} = changeset} = Roles.grant_permission(role, permission)
-      assert %{permission_role: ["has already been taken"]} = errors_on(changeset)
+      %Role{permissions: [permission]} = Roles.grant_permission!(role, permission_params.name)
+
+      refute is_nil(permission.id)
+      assert permission.name == permission_params.name
     end
 
-    test "grant an new permission, returns the PermissionRole" do
-      permission = insert(:permission)
-      role = insert(:role)
+    test "grant an existing permission, grant it to the role and returns the role" do
+      role = insert!(:role)
+      permission = insert!(:permission)
 
-      assert {:ok, %PermissionRole{} = permission_role} = Roles.grant_permission(role, permission)
+      assert %Role{permissions: [^permission]} = Roles.grant_permission!(role, permission.name)
+    end
 
-      assert permission_role.permission_id == permission.id
-      assert permission_role.role_id == role.id
+    test "grant an already granted permission, returns the role" do
+      role = insert!(:role)
+      permission = insert!(:permission)
+      insert!(:permission_role, permission_id: permission.id, role_id: role.id)
+
+      assert %Role{permissions: [^permission]} = Roles.grant_permission!(role, permission.name)
     end
   end
 
   describe "revoke_permission/2" do
-    test "revoke an non existing assignation, raises an Ecto.NoResultsError" do
-      role = insert(:role)
-      permission = insert(:permission)
+    test "revoke a granted permission, returns the role" do
+      permission_1 = insert!(:permission)
+      permission_2 = insert!(:permission)
 
-      assert_raise Ecto.NoResultsError, fn ->
-        Roles.revoke_permission(role, permission)
-      end
+      role = insert!(:role)
+
+      insert!(:permission_role, permission_id: permission_1.id, role_id: role.id)
+      insert!(:permission_role, permission_id: permission_2.id, role_id: role.id)
+
+      assert %Role{permissions: [^permission_2]} =
+               Roles.revoke_permission!(role, permission_1.name)
     end
 
-    test "revoke a permission from a role, returns the PermissionRole" do
-      permission = insert(:permission)
-      role = insert(:role)
-      insert(:permission_role, permission_id: permission.id, role_id: role.id)
+    test "revoke a non granted permission, returns the role" do
+      permission = insert!(:permission)
 
-      assert {:ok, %PermissionRole{} = permission_role} =
-               Roles.revoke_permission(role, permission)
+      role = insert!(:role)
 
-      assert permission_role.permission_id == permission.id
-      assert permission_role.role_id == role.id
+      assert %Role{permissions: []} = Roles.revoke_permission!(role, permission.name)
     end
   end
 end

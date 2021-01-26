@@ -3,15 +3,15 @@ defmodule Annacl.Factory.Performer do
 
   defmacro __using__(_opts) do
     quote do
-      def performer_factory do
+      def build(:performer) do
         %Performer{}
       end
 
-      def performer_permission_factory do
+      def build(:performer_permission) do
         %PerformerPermission{}
       end
 
-      def performer_role_factory do
+      def build(:performer_role) do
         %PerformerRole{}
       end
     end

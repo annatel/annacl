@@ -10,10 +10,22 @@ defmodule Annacl.Roles.Role do
   alias Annacl.Permissions.Permission
   alias Annacl.PermissionsRoles.PermissionRole
 
+  @type t :: %__MODULE__{
+          id: integer,
+          inserted_at: DateTime.t(),
+          name: binary,
+          permissions: [Permission.t()],
+          updated_at: DateTime.t()
+        }
+
   schema "annacl_roles" do
     field(:name, :string)
 
-    many_to_many(:permissions, Permission, join_through: PermissionRole)
+    many_to_many(:permissions, Permission,
+      join_through: PermissionRole,
+      on_replace: :delete,
+      unique: true
+    )
 
     timestamps()
   end

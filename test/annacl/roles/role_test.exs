@@ -16,6 +16,14 @@ defmodule Annacl.Roles.RoleTest do
       refute :new_key in changes_keys
     end
 
+    test "when all params are valid, returns an valid changeset" do
+      role_params = params_for(:role)
+
+      changeset = Role.changeset(%Role{}, role_params)
+
+      assert changeset.valid?
+    end
+
     test "when required params are missing, returns an invalid changeset" do
       role_params = params_for(:role, name: nil)
 
@@ -23,14 +31,6 @@ defmodule Annacl.Roles.RoleTest do
 
       refute changeset.valid?
       assert %{name: ["can't be blank"]} = errors_on(changeset)
-    end
-
-    test "when all params are valid, returns an valid changeset" do
-      role_params = params_for(:role)
-
-      changeset = Role.changeset(%Role{}, role_params)
-
-      assert changeset.valid?
     end
   end
 end

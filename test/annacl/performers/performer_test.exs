@@ -2,8 +2,6 @@ defmodule Annacl.Performers.PerformerTest do
   use ExUnit.Case, async: true
   use Annacl.DataCase
 
-  import Annacl.Factory
-
   alias Annacl.Performers.Performer
 
   describe "changeset/2" do
