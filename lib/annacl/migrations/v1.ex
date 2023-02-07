@@ -32,7 +32,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp drop_permissions_table do
-    drop(table(:annacl_permissions))
+    drop(table(:annacl_permissions), mode: :cascade)
   end
 
   defp create_roles_table do
@@ -46,7 +46,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp drop_roles_table do
-    drop(table(:annacl_roles))
+    drop(table(:annacl_roles), mode: :cascade)
   end
 
   defp create_permission_role_table do
@@ -75,7 +75,7 @@ defmodule Annacl.Migrations.V1 do
   end
 
   defp drop_performers_table do
-    drop(table(:annacl_performers))
+    drop(table(:annacl_performers), mode: :cascade)
   end
 
   defp create_performer_role_table do
