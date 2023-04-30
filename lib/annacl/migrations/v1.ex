@@ -13,12 +13,12 @@ defmodule Annacl.Migrations.V1 do
   end
 
   def down do
-    drop_permissions_table()
-    drop_roles_table()
-    drop_permission_role_table()
-    drop_performers_table()
-    drop_performer_role_table()
     drop_performer_permission_table()
+    drop_performer_role_table()
+    drop_performers_table()
+    drop_permission_role_table()
+    drop_roles_table()
+    drop_permissions_table()
   end
 
   defp create_permissions_table do
